@@ -6,17 +6,13 @@ SDL_Window *win;
 SDL_Renderer *rend;
 const Uint8 *keys;
 
-
 //-----GAME STUFF---------
 const int width = 15, height = 90;
 const int defaultX = WINDOW_WIDTH / 2;
 const int defaultY = WINDOW_HEIGHT / 2;
 
-int velocityX = 4;
-int velocityY = -4;
-
-int velMin = 4;
-int velMax = 8;
+int velocityX = 5;
+int velocityY = 5;
 
 int pointsLeft = 0;
 int pointsRight = 0;
@@ -41,7 +37,7 @@ void initSDL()
 
 void initGame()
 {
-    randomizeVelocity();
+    randomizeDirection();
 }
 
 void runGame()
@@ -88,30 +84,27 @@ void ballAction()
 
     if(SDL_HasIntersection(&rectBall, &rectPlayerLeft) == SDL_TRUE)
     {
-        SDL_Log("con\n");
         velocityX *= -1;
+        velocityX += 1;
     }
 
     if(SDL_HasIntersection(&rectBall, &rectPlayerRight) == SDL_TRUE)
     {
-        SDL_Log("con\n");
         velocityX *= -1;
+        velocityX += -1;
     }
 
     rectBall.x += velocityX;
     rectBall.y += velocityY;
 }
 
-void randomizeVelocity()
+void randomizeDirection()
 {
-    velocityY = randRange(velMin, velMax);
-    velocityX = randRange(velMin, velMax);
-
     if(randRange(1, 2) == 2)
     {
         velocityX *= -1;
     }
-    if(randRange(1, 2) == 1)
+    if(randRange(1, 2) == 2)
     {
         velocityY *= -1;
     }
@@ -129,7 +122,7 @@ void nextBallPoint()
     rectBall.x = defaultX;
     rectBall.y = defaultY;
 
-    randomizeVelocity();
+    randomizeDirection();
 }
 
 void movement()
