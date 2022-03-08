@@ -9,13 +9,23 @@ const Uint8 *keys;
 
 //-----GAME STUFF---------
 const int width = 15, height = 90;
-bool start = false;
+const int defaultX = WINDOW_WIDTH / 2;
+const int defaultY = WINDOW_HEIGHT / 2;
+
 int velocityX = 4;
 int velocityY = -4;
 
+int velMin = 4;
+int velMax = 8;
+
+int pointsLeft = 0;
+int pointsRight = 0;
+
+bool start = false;
+
 SDL_Rect rectPlayerLeft = {0, (WINDOW_HEIGHT / 2) - (height / 2), width, height};
 SDL_Rect rectPlayerRight = {WINDOW_WIDTH - 15, (WINDOW_HEIGHT / 2) - (height / 2), width, height};
-SDL_Rect rectBall = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, width, width};
+SDL_Rect rectBall = {defaultX, defaultY, width, width};
 
 void initSDL()
 {
@@ -31,7 +41,7 @@ void initSDL()
 
 void initGame()
 {
-    // deat
+    randomizeVelocity();
 }
 
 void runGame()
@@ -66,12 +76,25 @@ void ballAction()
 
     if(rectBall.x <= 0)
     {
-        // actually no, reset the game on this point!!!
-        velocityX *= -1;
+        ++pointsRight;
+        nextBallPoint();
     }
 
     if(rectBall.x >= (WINDOW_WIDTH - rectBall.w))
     {
+        ++pointsLeft;
+        nextBallPoint();
+    }
+
+    if(SDL_HasIntersection(&rectBall, &rectPlayerLeft) == SDL_TRUE)
+    {
+        SDL_Log("con\n");
+        velocityX *= -1;
+    }
+
+    if(SDL_HasIntersection(&rectBall, &rectPlayerRight) == SDL_TRUE)
+    {
+        SDL_Log("con\n");
         velocityX *= -1;
     }
 
@@ -79,11 +102,39 @@ void ballAction()
     rectBall.y += velocityY;
 }
 
+void randomizeVelocity()
+{
+    velocityY = randRange(velMin, velMax);
+    velocityX = randRange(velMin, velMax);
+
+    if(randRange(1, 2) == 2)
+    {
+        velocityX *= -1;
+    }
+    if(randRange(1, 2) == 1)
+    {
+        velocityY *= -1;
+    }
+}
+
+int randRange(int min, int max)
+{
+    int diff = max - min;
+    // stackoverflow magic
+    return (int) (((double)(diff+1)/RAND_MAX) * rand() + min); // math is powerful(!!)
+}
+
+void nextBallPoint()
+{
+    rectBall.x = defaultX;
+    rectBall.y = defaultY;
+
+    randomizeVelocity();
+}
+
 void movement()
 {
     keys = SDL_GetKeyboardState(NULL);
-
-    SDL_Log("\n%d\n%d\n", rectBall.x, rectBall.y);
 
     if(keys[SDL_SCANCODE_RETURN] == 1)
     {

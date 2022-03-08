@@ -17,6 +17,9 @@ void initGame();
 void runGame();
 void movement();
 void ballAction();
+void nextBallPoint();
+void randomizeVelocity();
+int randRange(int min, int max);
 void cleanUp();
 
 #endif 

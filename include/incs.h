@@ -5,7 +5,7 @@
 #define WINDOW_HEIGHT 960
 
 #include <stdbool.h>
-#include <stdio.h>
+#include <time.h>
 #include <SDL2/SDL.h>
 
 

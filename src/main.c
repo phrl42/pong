@@ -5,6 +5,8 @@ int main()
     bool isRunning = true;
     SDL_Event ev;
 
+    srand(time(NULL));
+
     initSDL();
 
     initGame();
