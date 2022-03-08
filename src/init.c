@@ -122,6 +122,9 @@ void nextBallPoint()
     rectBall.x = defaultX;
     rectBall.y = defaultY;
 
+    velocityY = 5;
+    velocityX = 5;
+
     randomizeDirection();
 }
 
