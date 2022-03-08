@@ -10,11 +10,13 @@ extern SDL_Renderer *rend;
 //-----GAME STUFF---------
 extern SDL_Rect rectPlayerLeft;
 extern SDL_Rect rectPlayerRight;
+extern SDL_Rect rectBall;
 
 void initSDL();
 void initGame();
 void runGame();
 void movement();
+void ballAction();
 void cleanUp();
 
 #endif 
