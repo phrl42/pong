@@ -23,6 +23,11 @@ SDL_Rect rectPlayerLeft = {0, (WINDOW_HEIGHT / 2) - (height / 2), width, height}
 SDL_Rect rectPlayerRight = {WINDOW_WIDTH - 15, (WINDOW_HEIGHT / 2) - (height / 2), width, height};
 SDL_Rect rectBall = {defaultX, defaultY, width, width};
 
+SDL_AudioDeviceID audiodev;
+SDL_AudioSpec wav_spec;
+Uint32 wav_length;
+Uint8 *wav_buffer;
+
 void initSDL()
 {
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
@@ -38,6 +43,24 @@ void initSDL()
 void initGame()
 {
     randomizeDirection();
+
+    if(SDL_LoadWAV("src/bop.wav", &wav_spec, &wav_buffer, &wav_length) == NULL)
+    {
+        SDL_Log("failed loading wav file: %s\n", SDL_GetError());
+        exit(1);
+    }
+
+    // open audio device
+    audiodev = SDL_OpenAudioDevice(NULL, 0, &wav_spec, NULL, 0);
+}
+
+void playSound()
+{
+    // queue audio file
+    SDL_QueueAudio(audiodev, wav_buffer, wav_length);
+    
+    // let the audio device play the audio file
+    SDL_PauseAudioDevice(audiodev, 0);
 }
 
 void runGame()
@@ -84,12 +107,14 @@ void ballAction()
 
     if(SDL_HasIntersection(&rectBall, &rectPlayerLeft) == SDL_TRUE)
     {
+        playSound();
         velocityX *= -1;
         velocityX += 1;
     }
 
     if(SDL_HasIntersection(&rectBall, &rectPlayerRight) == SDL_TRUE)
     {
+        playSound();
         velocityX *= -1;
         velocityX += -1;
     }
@@ -173,6 +198,8 @@ void movement()
 
 void cleanUp()
 {
+    SDL_FreeWAV(wav_buffer);
+    SDL_CloseAudioDevice(audiodev);
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(win);
     SDL_Quit();
