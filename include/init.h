@@ -15,6 +15,8 @@ extern SDL_Rect rectBall;
 void initSDL();
 void initGame();
 void playSound();
+void colorRandom();
+void runMenu();
 void runGame();
 void movement();
 void ballAction();

@@ -1,3 +1,3 @@
 # pong
 
-pong in sdl2
+worlds worst pong written <b>only</b> in libsdl2
