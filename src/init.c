@@ -17,7 +17,7 @@ int velocityY = 5;
 int pointsLeft = 0;
 int pointsRight = 0;
 
-bool start = false;
+bool start = true;
 
 // is there really no other way around hardcoding it? maybe some calculation will help, but I highly doubt that
 SDL_Rect rectPong0 = {(WINDOW_WIDTH / 4) - 100, WINDOW_HEIGHT / 4, 100, 25}; // top 
@@ -237,11 +237,6 @@ void nextBallPoint()
 void movement()
 {
     keys = SDL_GetKeyboardState(NULL);
-
-    if(keys[SDL_SCANCODE_RETURN] == 1)
-    {
-        start = true;
-    }
 
     if(keys[SDL_SCANCODE_UP] == 1)
     {
