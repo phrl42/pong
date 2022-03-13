@@ -39,6 +39,8 @@ SDL_Rect rectPong12 = {(WINDOW_WIDTH / 4) + 275, (WINDOW_HEIGHT / 4) + 200, 100,
 SDL_Rect rectPong13 = {(WINDOW_WIDTH / 4) + 350, (WINDOW_HEIGHT / 4) + 125, 25, 100}; // lower left
 SDL_Rect rectPong14 = {(WINDOW_WIDTH / 4) + 325, (WINDOW_HEIGHT / 4) + 125, 50, 25}; // middle thing
 
+SDL_Rect rectZero = {(WINDOW_WIDTH / 4) - 100, WINDOW_HEIGHT / 4, 10, 10};
+
 
 SDL_Rect rectPlayerLeft = {0, (WINDOW_HEIGHT / 2) - (height / 2), width, height};
 SDL_Rect rectPlayerRight = {WINDOW_WIDTH - 15, (WINDOW_HEIGHT / 2) - (height / 2), width, height};
@@ -234,7 +236,7 @@ void nextBallPoint()
     randomizeDirection();
 }
 
-void movement()
+void movementLeft()
 {
     keys = SDL_GetKeyboardState(NULL);
 
@@ -254,6 +256,12 @@ void movement()
         }
         rectPlayerLeft.y += 10;
     }
+}
+
+void movementRight()
+{
+    keys = SDL_GetKeyboardState(NULL);
+    
     if(keys[SDL_SCANCODE_W] == 1)
     {
         if(rectPlayerRight.y <= 0)
@@ -269,6 +277,76 @@ void movement()
             return;
         }
         rectPlayerRight.y += 10;
+    }
+}
+
+void showPoints()
+{
+    // this will be time-consuming
+    switch(pointsLeft)
+    {
+    case 1:
+        break;
+    
+    case 2:
+        break;
+
+    case 3:
+        break;
+
+    case 4:
+        break;
+
+    case 5:
+        break;
+
+    case 6:
+        break;
+
+    case 7:
+        break;
+
+    case 8:
+        break;
+    
+    case 9:
+        break;
+
+    default:
+        break;
+    }
+
+    switch(pointsRight)
+    {
+    case 1:
+        break;
+    
+    case 2:
+        break;
+
+    case 3:
+        break;
+
+    case 4:
+        break;
+
+    case 5:
+        break;
+
+    case 6:
+        break;
+
+    case 7:
+        break;
+
+    case 8:
+        break;
+    
+    case 9:
+        break;
+        
+    default:
+        break;
     }
 }
 

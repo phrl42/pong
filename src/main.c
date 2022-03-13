@@ -46,7 +46,9 @@ int main()
             SDL_RenderClear(rend);
 
             runGame();
-            movement();
+            movementLeft();
+            movementRight();
+            showPoints();
             // switch front buffer with back buffer
             SDL_RenderPresent(rend);
 
